@@ -982,10 +982,12 @@ function! s:ValidatePathfile(dir, line, lineNo) "{{{2
     " Be specific about which char(s) is/are invalid
     let invalidName = 0
     for c in split(a:line, '\zs')
-      let validChar = (match(c, s:validChars) != -1) || (match(c, s:separator) != -1)
-      if !validChar
-        echom "Invalid character '".c."' in name '".a:line."' on line ".a:lineNo
-        let invalidName = 1
+      if char2nr(c)<255
+        let validChar = (match(c, s:validChars) != -1) || (match(c, s:separator) != -1)
+        if !validChar
+          echom "Invalid character '".c."' in name '".a:line."' on line ".a:lineNo
+          let invalidName = 1
+        endif
       endif
     endfor
     if invalidName
