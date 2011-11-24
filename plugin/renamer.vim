@@ -982,6 +982,7 @@ function! s:ValidatePathfile(dir, line, lineNo) "{{{2
     " Be specific about which char(s) is/are invalid
     let invalidName = 0
     for c in split(a:line, '\zs')
+      " just hacked here for multibyte.
       if char2nr(c)<255
         let validChar = (match(c, s:validChars) != -1) || (match(c, s:separator) != -1)
         if !validChar
